@@ -10,10 +10,11 @@ class CasinumList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CasinumBloc, CasinumsState>(builder: (context, state) {
-      print(state.casinums.length);
-      return ListView.builder(
-        itemCount: state.casinums.length,
-        itemBuilder: (context, index) => CasinumItem(casinumIndex: index),
+      return Expanded(
+        child: ListView.builder(
+          itemCount: state.casinums.length,
+          itemBuilder: (context, index) => CasinumItem(casinumIndex: index),
+        ),
       );
     });
   }

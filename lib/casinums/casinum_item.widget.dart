@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_bloc/casinums/casinum_bloc.dart';
 import 'package:learning_bloc/casinums/casinum_event.dart';
 import 'package:learning_bloc/casinums/casinum_state.dart';
+import 'package:learning_bloc/styles/color_schema.dart';
 
 class CasinumItem extends StatelessWidget {
   final int casinumIndex;
@@ -12,10 +13,8 @@ class CasinumItem extends StatelessWidget {
   String dateTimeConvert(DateTime dateTime) {
     String dataString = dateTime.toIso8601String();
     List<String> data = dataString.split("T");
-    String dateString = data[0];
-    String timeString = data[1];
-    List<String> date = dateString.split("-");
-    List<String> time = timeString.split(":");
+    List<String> date = data[0].split("-");
+    List<String> time = data[1].split(":");
     return "${date[1]}/${date[2]}/${date[0].substring(2)}   ${time[0]}:${time[1]}";
   }
 
@@ -42,12 +41,18 @@ class CasinumItem extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
             height: 50,
             decoration: BoxDecoration(
-                color: Colors.blueAccent,
+                color: ColorSchema.acceptColor,
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
               children: [
                 if (state.selectedNumber > 0)
                   Checkbox(
+                      checkColor: Colors.white,
+                      activeColor: Colors.transparent,
+                      side: BorderSide(
+                        color: Colors.white,
+                        width: 1.5
+                      ),
                       value: state.itemSelecteds[casinumIndex],
                       onChanged: (value) {}),
                 Expanded(
@@ -55,9 +60,7 @@ class CasinumItem extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Text(
                       state.casinums[casinumIndex].name,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
                 ),
@@ -65,9 +68,7 @@ class CasinumItem extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Text(
                     dateTimeConvert(state.casinums[casinumIndex].initDate),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ),
               ],
