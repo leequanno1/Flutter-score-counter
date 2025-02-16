@@ -1,14 +1,14 @@
-class Casinum {
-  int key;
+class Player {
+  int id;
   String name;
-  bool delFlg;
+  int score;
   int deafaultBet;
   DateTime initDate;
 
-  Casinum({
-    required this.key,
+  Player({
+    required this.id,
     required this.name,
-    required this.delFlg,
+    required this.score,
     required this.deafaultBet,
     required this.initDate,
   });

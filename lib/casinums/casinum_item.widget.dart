@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_bloc/casinums/casinum_bloc.dart';
 import 'package:learning_bloc/casinums/casinum_event.dart';
 import 'package:learning_bloc/casinums/casinum_state.dart';
+import 'package:learning_bloc/models/casinum.dart';
+import 'package:learning_bloc/round/round_screen.dart';
 import 'package:learning_bloc/styles/color_schema.dart';
 
 class CasinumItem extends StatelessWidget {
@@ -30,6 +32,10 @@ class CasinumItem extends StatelessWidget {
         onTap: () {
           if (state.selectedNumber == 0) {
             // TODO: redirect to view.
+            Navigator.push<Casinum>(
+              context,
+              MaterialPageRoute(builder: (context) => RoundScreen(casinum: state.casinums[casinumIndex]))
+            );
           } else {
             // un check
             context.read<CasinumBloc>().add(CasinumsSelected(casinumIndex));

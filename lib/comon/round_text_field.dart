@@ -16,6 +16,16 @@ class RoundTextField extends StatelessWidget {
 
   final TextEditingController controller;
 
+  final Color borderColor;
+
+  final TextStyle style;
+
+  final TextAlign textAlign;
+  
+  final EdgeInsetsGeometry contentPadding;
+
+  final TextInputType keyboardType;
+
   const RoundTextField({
     super.key,
     required this.controller,
@@ -27,8 +37,20 @@ class RoundTextField extends StatelessWidget {
     this.textSize = 15.0,
     /// Default focus
     this.autoFocus = true,
+
     this.radius = 5,
-    this.hintText = "",
+    
+    this.hintText = "", 
+
+    this.borderColor = ColorSchema.borderColor, 
+
+    this.style = const TextStyle(fontSize: 15), 
+    
+    this.textAlign = TextAlign.start, 
+    
+    this.contentPadding = const EdgeInsets.symmetric(horizontal: 12), 
+    
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -37,19 +59,23 @@ class RoundTextField extends StatelessWidget {
       height: height,
       width: width,
       child: TextField(
+        keyboardType: keyboardType,
+        textAlign: textAlign,
         autofocus: autoFocus,
         controller: controller,
-        style: const TextStyle(fontSize: 15),
+        style: style,
         decoration: InputDecoration(
           hintText: hintText,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: contentPadding,
+          fillColor: Colors.white,
+          filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(radius),
-            borderSide: const BorderSide(color: ColorSchema.borderColor, width: 1.5),
+            borderSide: BorderSide(color: borderColor, width: 1.5),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(radius),
-            borderSide: const BorderSide(color: ColorSchema.borderColor, width: 1.5),
+            borderSide: BorderSide(color: borderColor, width: 1.5),
           ),
         ),
       ),
