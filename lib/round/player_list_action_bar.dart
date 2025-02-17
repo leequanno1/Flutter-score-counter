@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_bloc/round/players_bloc.dart';
+import 'package:learning_bloc/round/players_state.dart';
 
 class PlayerListActionBar extends StatelessWidget {
   const PlayerListActionBar({
@@ -7,22 +10,25 @@ class PlayerListActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
+    return BlocBuilder<PlayersBloc, PlayersState>(
+      buildWhen: (previous, current) => previous.itemSelecteds != current.itemSelecteds,
+      builder: (context, state) {
+      return Row(
+        children: [
+          Expanded(
+              child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              "Total(${10})",
+              "Total(${state.players.length})",
               style: TextStyle(fontSize: 18),
             ),
-          )
-        ),
-        if (true)
-          IconButton(onPressed: () {}, icon: Icon(Icons.add))
-        else
-          IconButton(onPressed: () {}, icon: Icon(Icons.delete_outline))
-      ],
-    );
+          )),
+          if (state.itemSelecteds > 0)
+            IconButton(onPressed: () {}, icon: Icon(Icons.delete_outline))
+          else
+            IconButton(onPressed: () {}, icon: Icon(Icons.add))
+        ],
+      );
+    });
   }
 }

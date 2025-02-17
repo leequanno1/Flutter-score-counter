@@ -5,7 +5,7 @@ class ScoreBoxComponent extends StatelessWidget {
   
   final double height;
   final double width;
-  final double score;
+  final int score;
   final EdgeInsetsGeometry margin;
 
   const ScoreBoxComponent({

@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:learning_bloc/comon/round_text_field.dart';
 import 'package:learning_bloc/comon/score_box_component.dart';
 import 'package:learning_bloc/comon/toast_message.dart';
+import 'package:learning_bloc/models/player.dart';
 import 'package:learning_bloc/styles/button.dart';
 import 'package:learning_bloc/styles/color_schema.dart';
 
 class PlayerItemComponent extends StatefulWidget {
   
-  final int defaultBetScore;
+  // final int defaultBetScore;
+  final Player player;
   
   const PlayerItemComponent({
-    super.key, required this.defaultBetScore
+    super.key, required this.player
   });
 
   @override
@@ -19,12 +21,14 @@ class PlayerItemComponent extends StatefulWidget {
 
 class _PlayerItemComponentState extends State<PlayerItemComponent> {
   late final TextEditingController _controller ;
+  late Player _player;
   late bool _isAddConfirmed = false, _isSubtractConfirm = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: "${widget.defaultBetScore}");
+    _player = widget.player;
+    _controller = TextEditingController(text: "${widget.player.deafaultBet}");
   }
 
   @override
@@ -49,14 +53,14 @@ class _PlayerItemComponentState extends State<PlayerItemComponent> {
             SizedBox(
               width: 105,
               child: Text(
-                "Player name", 
+                _player.name, 
                 style: TextStyle(fontSize: 18),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             Expanded(
               child: Center(
-                child: ScoreBoxComponent(score: 10, margin: EdgeInsets.only(left: 5)),
+                child: ScoreBoxComponent(score: _player.score, margin: EdgeInsets.only(left: 5)),
               ),
             ),
             Row(
