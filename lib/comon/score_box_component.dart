@@ -24,7 +24,7 @@ class ScoreBoxComponent extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
-          color: score > 0 ? ColorSchema.primaryColor : ColorSchema.deleteColor,
+          color: score >= 0 ? ColorSchema.primaryColor : ColorSchema.deleteColor,
       ),
       child: Center(
         child: Text(

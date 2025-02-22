@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_bloc/log/log_history_screen.dart';
 import 'package:learning_bloc/models/casinum.dart';
 import 'package:learning_bloc/round/dealer_component.dart';
 import 'package:learning_bloc/round/player_list_action_bar.dart';
@@ -25,7 +26,20 @@ class RoundScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             actions: [
-              PopupMenuButton(itemBuilder: (context) {
+              PopupMenuButton(onSelected: (value) {
+                switch (value) {
+                  case 1:
+                    break;
+                  case 2:
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true, // Full height
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => LogHistoryScreen(),
+                    );
+                    break;
+                }
+              }, itemBuilder: (context) {
                 return [
                   PopupMenuItem(
                       value: 1,
@@ -58,7 +72,6 @@ class RoundScreen extends StatelessWidget {
               PlayerListComponent(),
             ],
           ),
-        )
-      );
+        ));
   }
 }

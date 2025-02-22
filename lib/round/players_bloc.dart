@@ -24,13 +24,14 @@ class PlayersBloc extends Bloc<PlayerEvent, PlayersState> {
           players.removeAt(i);
         }
       }
+      emit(PlayersInit(players));
     });
 
     on<PlayerSelected>((event, emit) {
       final List<Player> playes = List<Player>.from(state.players);
       final List<bool> isSelected = List<bool>.from(state.isSelected);
       isSelected[event.position] = !isSelected[event.position];
-      final int itemSeleted = state.itemSelecteds;
+      final int itemSeleted = isSelected[event.position]? state.itemSelecteds + 1: state.itemSelecteds - 1;
       emit(PlayersUpdate(playes, isSelected, itemSeleted));
     });
 

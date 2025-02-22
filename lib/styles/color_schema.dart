@@ -4,7 +4,7 @@ class ColorSchema {
   static const Color primaryColor = Color(0xFF007AFF);
   static const Color secondaryColor = Color(0xFFD9D9D9);
   static const Color errorColor = Color(0xFFFF0000);
-  static const Color deleteColor = Color(0xB3FF0000); // 70% opacity
+  static const Color deleteColor = Color.fromARGB(220, 255, 0, 0); // 70% opacity
   static const Color borderColor = Color(0xFF898989);
   static const Color dealerColor = Color(0xFFBCC1CA);
   static const Color playerColor = Color(0xFF99D09E);

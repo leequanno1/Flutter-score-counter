@@ -21,7 +21,7 @@ class DealerComponent extends StatelessWidget {
           for(var player in current.players) {
             curScore += player.score;
           }
-          return preScore != curScore;
+          return preScore == curScore;
         },
         builder: (context, state) {
           int score = 0;

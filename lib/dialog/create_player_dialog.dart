@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learning_bloc/comon/round_text_field.dart';
 import 'package:learning_bloc/comon/toast_message.dart';
-import 'package:learning_bloc/models/casinum.dart';
+import 'package:learning_bloc/models/player.dart';
 import 'package:learning_bloc/styles/button.dart';
 import 'package:learning_bloc/styles/color_schema.dart';
 
@@ -32,7 +32,7 @@ class CreatePlayerDialog extends StatelessWidget {
                   margin: EdgeInsets.only(top: 10, bottom: 10),
                   child: RoundTextField(
                     controller: _controller,
-                    hintText: "New Casinum",
+                    hintText: "New player",
                   ),
                 ),
                 Row(
@@ -40,7 +40,7 @@ class CreatePlayerDialog extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop<Casinum>(context, null);
+                        Navigator.pop<Player>(context, null);
                       },
                       style: buttonSecondary,
                       child: Text("Cancel"),
@@ -51,9 +51,14 @@ class CreatePlayerDialog extends StatelessWidget {
                           onPressed: () {
                             var textValue = _controller.text;
                             if (textValue.isNotEmpty) {
-                              Navigator.pop<Casinum>(
+                              Navigator.pop<Player>(
                                   context,
-                                  null);
+                                  Player(
+                                      id: DateTime.now().millisecondsSinceEpoch,
+                                      name: _controller.text,
+                                      score: 0,
+                                      deafaultBet: 2,
+                                      initDate: DateTime.now()));
                             } else {
                               showToastMessage(context, "Name is blank!!!");
                             }

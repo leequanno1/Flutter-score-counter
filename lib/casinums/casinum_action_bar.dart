@@ -43,6 +43,7 @@ class CasinumActionBar extends StatelessWidget {
   Future openCreatePopup(BuildContext context) async {
     final result = await showDialog<Casinum>(context: context, builder: (context) => CreateCasinumDialog());
     if(result != null) {
+      // Add casinum to db
       context.read<CasinumBloc>().add(CasinumsAdd(result));
     }
   }

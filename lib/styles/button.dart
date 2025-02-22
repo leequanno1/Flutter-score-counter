@@ -21,6 +21,16 @@ final ButtonStyle buttonSecondary = ElevatedButton.styleFrom(
   )
 );
 
+final ButtonStyle buttonDelete = ElevatedButton.styleFrom(
+  minimumSize: Size(95, 40),
+  backgroundColor: ColorSchema.deleteColor,
+  elevation: 0,
+  foregroundColor: Colors.white,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(5))
+  )
+);
+
 final ButtonStyle scoreButton = ElevatedButton.styleFrom(
   padding: EdgeInsets.zero,
   minimumSize: Size(25, 25),

@@ -18,6 +18,7 @@ class PlayerListComponent extends StatelessWidget {
               itemBuilder: (context, index) {
                 return PlayerItemComponent(
                   player: state.players[index],
+                  index: index,
                 );
               }));
     });
