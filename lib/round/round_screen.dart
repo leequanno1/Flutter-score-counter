@@ -15,7 +15,7 @@ class RoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => PlayersBloc())],
+        providers: [BlocProvider(create: (context) => PlayersBloc(casinum.id))],
         child: Scaffold(
           appBar: AppBar(
             shape: Border(
@@ -35,7 +35,7 @@ class RoundScreen extends StatelessWidget {
                       context: context,
                       isScrollControlled: true, // Full height
                       backgroundColor: Colors.transparent,
-                      builder: (context) => LogHistoryScreen(),
+                      builder: (context) => LogHistoryScreen(casinumId: casinum.id,),
                     );
                     break;
                 }

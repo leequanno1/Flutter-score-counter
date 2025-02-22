@@ -1,9 +1,20 @@
-class LogItem {
+import 'package:hive/hive.dart';
+
+part 'log_item.g.dart';
+
+@HiveType(typeId: 1)
+class LogItem extends HiveObject{
+  
+  @HiveField(0)
   String content;
+
+  @HiveField(1)
   DateTime initDate;
+  
+  @HiveField(2)
   int logType;
 
-  LogItem(this.content, this.initDate, this.logType);
+  LogItem({required this.content, required this.initDate, required this.logType});
 }
 
 class LogType {

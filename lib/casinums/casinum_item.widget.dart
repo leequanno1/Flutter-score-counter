@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:learning_bloc/casinums/casinum_bloc.dart';
 import 'package:learning_bloc/casinums/casinum_event.dart';
 import 'package:learning_bloc/casinums/casinum_state.dart';
 import 'package:learning_bloc/comon/string_helper.dart';
 import 'package:learning_bloc/models/casinum.dart';
+import 'package:learning_bloc/models/db_name.dart';
+import 'package:learning_bloc/models/log_item.dart';
+import 'package:learning_bloc/models/player.dart';
 import 'package:learning_bloc/round/round_screen.dart';
 import 'package:learning_bloc/styles/color_schema.dart';
 
@@ -22,12 +26,20 @@ class CasinumItem extends StatelessWidget {
             context.read<CasinumBloc>().add(CasinumsSelected(casinumIndex));
           }
         },
-        onTap: () {
+        onTap: () async {
           if (state.selectedNumber == 0) {
-            Navigator.push<Casinum>(
+            // Open box
+            var playerBox = await Hive.openBox<Player>(DbName.getPlayerBaseName(state.casinums[casinumIndex].id));
+            var loggerBox = await Hive.openBox<LogItem>(DbName.getLoggerBaseName(state.casinums[casinumIndex].id));
+
+            await Navigator.push<Casinum>(
+              // ignore: use_build_context_synchronously
               context,
               MaterialPageRoute(builder: (context) => RoundScreen(casinum: state.casinums[casinumIndex]))
             );
+            // Close box
+            playerBox.close();
+            loggerBox.close();
           } else {
             // un check
             context.read<CasinumBloc>().add(CasinumsSelected(casinumIndex));

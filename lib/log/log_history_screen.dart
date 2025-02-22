@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:learning_bloc/comon/string_helper.dart';
+import 'package:learning_bloc/models/db_name.dart';
 import 'package:learning_bloc/models/log_item.dart';
 import 'package:learning_bloc/styles/color_schema.dart';
 
 class LogHistoryScreen extends StatelessWidget {
-  const LogHistoryScreen({super.key});
+  
+  final int casinumId;
+
+  const LogHistoryScreen({super.key, required this.casinumId});
+
+  List<Widget> handleGetLogger(){
+    Box<LogItem> box = Hive.box<LogItem>(DbName.getLoggerBaseName(casinumId));
+    return (box.values.map((item) => _logItem(item)).toList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +45,7 @@ class LogHistoryScreen extends StatelessWidget {
                 child: ListView(
                   controller: scrollController, // Cần thiết để cuộn nội dung bên trong
                   padding: EdgeInsets.all(10),
-                  children: [
-                    _logItem(LogItem("Player 1 has won 2\$ (total: 2\$).", DateTime.now(), LogType.log1)),
-                    _logItem(LogItem("Player 1 has lost 2\$ (total: 0\$).", DateTime.now(), LogType.log2)),
-                    _logItem(LogItem("Player 2 removed.", DateTime.now(), LogType.log3)),
-                    _logItem(LogItem("Player 1 added.", DateTime.now(), LogType.log4)),
-                  ],
+                  children: handleGetLogger(),
                 ),
               ),
             ],

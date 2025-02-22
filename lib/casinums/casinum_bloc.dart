@@ -1,25 +1,31 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:learning_bloc/casinums/casinum_event.dart';
 import 'package:learning_bloc/casinums/casinum_state.dart';
 import 'package:learning_bloc/models/casinum.dart';
+import 'package:learning_bloc/models/db_name.dart';
 
 class CasinumBloc extends Bloc<CasinumsEvent, CasinumsState> {
-  CasinumBloc():super(CasinumsInit([
-    Casinum(key: 1, name: "name1", delFlg: false, deafaultBet: 2, initDate: DateTime.now()),
-    Casinum(key: 2, name: "name2", delFlg: false, deafaultBet: 2, initDate: DateTime.now()),
-    Casinum(key: 3, name: "name3", delFlg: false, deafaultBet: 2, initDate: DateTime.now()),
-    Casinum(key: 4, name: "name4", delFlg: false, deafaultBet: 2, initDate: DateTime.now()),
-  ])) {
 
-    on<CasinumsAdd> ((event, emit) {
+  final casinumBox = Hive.box<Casinum>(DbName.getCasinumBaseName());
+
+  CasinumBloc():super(CasinumsInit(
+    Hive.box<Casinum>(DbName.getCasinumBaseName()).values.where((item) => !item.delFlg).toList()
+  )) {
+
+    on<CasinumsAdd> ((event, emit) async {
+      await casinumBox.put(event.addedItem.id, event.addedItem);
       state.casinums.add(event.addedItem);
       emit(CasinumsInit(state.casinums));
     },);
     
-    on<CasinumDelete> ((event, emit) {
+    on<CasinumDelete> ((event, emit) async {
       var casinums = state.casinums;
       for(int i = state.itemSelecteds.length - 1; i >= 0; i--){
         if(state.itemSelecteds[i]) {
+          // get casinum data
+          var tempCasi = casinums[i]..delFlg = true;
+          await casinumBox.put(tempCasi.id, tempCasi);
           casinums.removeAt(i);
         }
       }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:learning_bloc/comon/round_text_field.dart';
 import 'package:learning_bloc/comon/toast_message.dart';
@@ -56,7 +54,7 @@ class CreateCasinumDialog extends StatelessWidget {
                               Navigator.pop<Casinum>(
                                   context,
                                   Casinum(
-                                      key: Random().nextInt(1000),
+                                      id: DateTime.now().millisecondsSinceEpoch % 4000000000,
                                       name: textValue,
                                       delFlg: false,
                                       deafaultBet: 2,

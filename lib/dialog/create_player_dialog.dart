@@ -54,7 +54,7 @@ class CreatePlayerDialog extends StatelessWidget {
                               Navigator.pop<Player>(
                                   context,
                                   Player(
-                                      id: DateTime.now().millisecondsSinceEpoch,
+                                      id: DateTime.now().millisecondsSinceEpoch % 4000000000,
                                       name: _controller.text,
                                       score: 0,
                                       deafaultBet: 2,
