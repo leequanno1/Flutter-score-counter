@@ -7,14 +7,14 @@ import 'package:learning_bloc/models/db_name.dart';
 
 class CasinumBloc extends Bloc<CasinumsEvent, CasinumsState> {
 
-  final casinumBox = Hive.box<Casinum>(DbName.getCasinumBaseName());
+  static final _casinumBox = Hive.box<Casinum>(DbName.getCasinumBaseName());
 
   CasinumBloc():super(CasinumsInit(
-    Hive.box<Casinum>(DbName.getCasinumBaseName()).values.where((item) => !item.delFlg).toList()
+    _casinumBox.values.where((item) => !item.delFlg).toList()
   )) {
 
     on<CasinumsAdd> ((event, emit) async {
-      await casinumBox.put(event.addedItem.id, event.addedItem);
+      await _casinumBox.put(event.addedItem.id, event.addedItem);
       state.casinums.add(event.addedItem);
       emit(CasinumsInit(state.casinums));
     },);
@@ -25,7 +25,7 @@ class CasinumBloc extends Bloc<CasinumsEvent, CasinumsState> {
         if(state.itemSelecteds[i]) {
           // get casinum data
           var tempCasi = casinums[i]..delFlg = true;
-          await casinumBox.put(tempCasi.id, tempCasi);
+          await _casinumBox.put(tempCasi.id, tempCasi);
           casinums.removeAt(i);
         }
       }
@@ -36,6 +36,10 @@ class CasinumBloc extends Bloc<CasinumsEvent, CasinumsState> {
       state.itemSelecteds[event.seletedIndex] = !state.itemSelecteds[event.seletedIndex];
       int changedValue = state.itemSelecteds[event.seletedIndex] ? 1 : -1;
       emit(CasinumsUpdate(state.casinums, state.itemSelecteds, state.selectedNumber + changedValue));
+    },);
+
+    on<CasinumRefresh> ((event, emit) {
+      emit(CasinumsInit(_casinumBox.values.where((item) => !item.delFlg).toList()));
     },);
   }
 }

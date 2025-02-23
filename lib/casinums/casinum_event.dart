@@ -17,3 +17,5 @@ class CasinumsAdd extends CasinumsEvent {
 }
 
 class CasinumDelete extends CasinumsEvent {}
+
+class CasinumRefresh extends CasinumsEvent {}
