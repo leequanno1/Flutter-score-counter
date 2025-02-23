@@ -50,17 +50,19 @@ class PlayersBloc extends Bloc<PlayerEvent, PlayersState> {
 
     on<PlayerUpdate>((event, emit) async {
       final List<Player> playes = List<Player>.from(state.players);
-      print(event.player.score);
-      print(playes[event.position].score);
-      final isIncrease = event.player.score - playes[event.position].score;
-      playes[event.position] = event.player;
+      // playes[event.position] = event.player;
       final List<bool> isSelected = List<bool>.from(state.isSelected);
       final int itemSeleted = state.itemSelecteds;
       await box.put(event.player.id, event.player);
-      if(isIncrease > 0) {
-        await logBox.put(DateTime.now().microsecondsSinceEpoch % 4000000000, LogItem(content: "${event.player.name} has won $isIncrease\$.", initDate: DateTime.now(), logType: LogType.log4));
-      }else{
-        await logBox.put(DateTime.now().microsecondsSinceEpoch % 4000000000, LogItem(content: "${event.player.name} has lost ${isIncrease*-1}\$.", initDate: DateTime.now(), logType: LogType.log3));
+      print(event.typeUpdate);
+      switch (event.typeUpdate) {
+        case -1:
+          await logBox.put(DateTime.now().microsecondsSinceEpoch % 4000000000, LogItem(content: "${event.player.name} has lost ${event.player.deafaultBet}\$ (total: ${event.player.score}).", initDate: DateTime.now(), logType: LogType.log3));
+          break;
+        case 1:
+          await logBox.put(DateTime.now().microsecondsSinceEpoch % 4000000000, LogItem(content: "${event.player.name} has won ${event.player.deafaultBet}\$ (total: ${event.player.score}).", initDate: DateTime.now(), logType: LogType.log4));
+          break;
+        default:
       }
       emit(PlayersUpdate(playes, isSelected, itemSeleted));
     });

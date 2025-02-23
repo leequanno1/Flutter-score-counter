@@ -21,6 +21,8 @@ class PlayerUnSelecteAll extends PlayerEvent {}
 class PlayerUpdate extends PlayerEvent{
   final Player player;
   final int position;
+  // -1: decrease, 0: else, 1: increase
+  final int typeUpdate;
 
-  PlayerUpdate(this.player, this.position);
+  PlayerUpdate(this.player, this.position, this.typeUpdate);
 }

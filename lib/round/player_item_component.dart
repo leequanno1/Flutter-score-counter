@@ -109,7 +109,7 @@ class _PlayerItemComponentState extends State<PlayerItemComponent> {
                                 _player.score -= _player.deafaultBet;
                                 context
                                     .read<PlayersBloc>()
-                                    .add(PlayerUpdate(_player, _index));
+                                    .add(PlayerUpdate(_player, _index, -1));
                                 showToastMessage(context,
                                     "Subtract ok! (${_controller.text})");
                               } catch (e) {
@@ -149,7 +149,7 @@ class _PlayerItemComponentState extends State<PlayerItemComponent> {
                                 _player.score += _player.deafaultBet;
                                 context
                                     .read<PlayersBloc>()
-                                    .add(PlayerUpdate(_player, _index));
+                                    .add(PlayerUpdate(_player, _index, 1));
                                 showToastMessage(
                                     context, "Plus ok! (${_controller.text})");
                               } catch (e) {
